@@ -1,5 +1,6 @@
 import requests
 import allure
+import pytest
 from endpoints.endpoint import Endpoint
 
 
@@ -41,3 +42,4 @@ class GetMeme(Endpoint):
         for meme in all_memes:
             if meme['id'] != my_meme_id:
                 return meme['id']
+        pytest.skip('No IDs found for test')

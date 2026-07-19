@@ -12,7 +12,10 @@ class Authorization(Endpoint):
             json=payload,
             headers=headers
         )
-        self.json = self.response.json()
+        if self.response.status_code == 200:
+            self.json = self.response.json()
+        else:
+            self.json = {}
         return self.response
 
     @allure.step('Check if token is alive')
