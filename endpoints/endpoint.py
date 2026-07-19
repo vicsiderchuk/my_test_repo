@@ -11,25 +11,10 @@ class Endpoint:
             'Authorization': token
         }
 
-    @allure.step('Check response status is 200')
-    def check_response_status_200(self):
-        assert self.response.status_code == 200
-
-    @allure.step('Check response status is 400')
-    def check_response_status_400(self):
-        assert self.response.status_code == 400
-
-    @allure.step('Check response status is 401')
-    def check_response_status_401(self):
-        assert self.response.status_code == 401
-
-    @allure.step('Check response status is 403')
-    def check_response_status_403(self):
-        assert self.response.status_code == 403
-
-    @allure.step('Check response status is 404')
-    def check_response_status_404(self):
-        assert self.response.status_code == 404
+    @allure.step('Check response status code is {expected_status_code}')
+    def check_response_status_code(self, expected_status_code):
+        assert self.response.status_code == expected_status_code, \
+            f'Expected status code {expected_status_code}, but got {self.response.status_code}'
 
     @allure.step('Check that returned ID is the same as requested ID')
     def check_meme_id(self, expected_meme_id):
@@ -49,3 +34,8 @@ class Endpoint:
         assert self.json['url'] == expected_payload['url']
         assert self.json['tags'] == expected_payload['tags']
         assert self.json['info'] == expected_payload['info']
+
+    @allure.step('Check that response has token')
+    def check_response_has_token(self):
+        assert 'token' in self.json
+        assert self.json['token']
